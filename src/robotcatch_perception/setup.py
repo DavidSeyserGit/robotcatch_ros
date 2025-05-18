@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'camera_interface = robotcatch_perception.camera_interface:main',
+            'object_detection = robotcatch_perception.object_detecction:main',
         ],
     },
 )
