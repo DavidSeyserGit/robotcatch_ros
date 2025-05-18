@@ -37,16 +37,13 @@ class CameraPublisher(Node):
             self.publisher_.publish(msg)
             self.get_logger().info('Publishing camera frame')
             
-            # Display the image (comment this out if running headless)
-            cv2.imshow('Camera Feed', frame)
-            cv2.waitKey(1)
+            # Display code removed
 
     def __del__(self):
         # Release the camera when the node is destroyed
         if hasattr(self, 'cap'):
             self.cap.release()
-        cv2.destroyAllWindows()
-
+        # No need to destroy windows as we're not showing any
 
 def main(args=None):
     rclpy.init(args=args)
@@ -59,7 +56,6 @@ def main(args=None):
     finally:
         camera_publisher.destroy_node()
         rclpy.shutdown()
-
 
 if __name__ == '__main__':
     main()
