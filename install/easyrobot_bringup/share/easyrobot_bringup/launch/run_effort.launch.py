@@ -1,1 +1,0 @@
-/media/david-linux-arm/linux/ros2_ws/EasyBot/EasyRobot/easyrobot_bringup/launch/run_effort.launch.py

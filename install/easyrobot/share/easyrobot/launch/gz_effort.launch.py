@@ -1,1 +1,0 @@
-/media/david-linux-arm/linux/ros2_ws/EasyBot/EasyRobot/easyrobot/launch/gz_effort.launch.py
