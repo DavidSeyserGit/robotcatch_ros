@@ -1,0 +1,1 @@
+/media/david-linux-arm/linux/ros2_ws/build/easyrobot/ament_cmake_core/easyrobotConfig-version.cmake

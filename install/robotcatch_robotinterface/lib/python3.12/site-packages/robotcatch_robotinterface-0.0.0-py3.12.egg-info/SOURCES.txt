@@ -1,0 +1,14 @@
+package.xml
+setup.cfg
+setup.py
+../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/PKG-INFO
+../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/SOURCES.txt
+../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/dependency_links.txt
+../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/requires.txt
+../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/top_level.txt
+../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/zip-safe
+resource/robotcatch_robotinterface
+robotcatch_robotinterface/__init__.py
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py

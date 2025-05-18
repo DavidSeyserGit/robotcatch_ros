@@ -1,0 +1,44 @@
+-- Found ament_cmake: 2.5.3 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /media/david-linux-arm/linux/ros2_ws/build/moveit_easyrobot
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/ament_index/resource_index/package_run_dependencies/moveit_easyrobot
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/ament_index/resource_index/parent_prefix_path/moveit_easyrobot
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/environment/ament_prefix_path.sh
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/environment/ament_prefix_path.dsv
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/environment/path.sh
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/environment/path.dsv
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/local_setup.bash
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/local_setup.sh
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/local_setup.zsh
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/local_setup.dsv
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/package.dsv
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/ament_index/resource_index/packages/moveit_easyrobot
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/cmake/moveit_easyrobotConfig.cmake
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/cmake/moveit_easyrobotConfig-version.cmake
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/package.xml
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/demo.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/move_group.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/move_group_edit.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/moveit_rviz.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/moveit_rviz_edit.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/rsp.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/setup_assistant.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/spawn_controllers.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/static_virtual_joint_tfs.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/launch/warehouse_db.launch.py
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/easyrobot.ros2_control.xacro
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/easyrobot.srdf
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/easyrobot.urdf.xacro
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/initial_positions.yaml
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/joint_limits.yaml
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/kinematics.yaml
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/moveit.rviz
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/moveit_controllers.yaml
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/ompl_planning.yaml
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/pilz_cartesian_limits.yaml
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/config/ros2_controllers.yaml
+-- Symlinking: /media/david-linux-arm/linux/ros2_ws/install/moveit_easyrobot/share/moveit_easyrobot/.setup_assistant

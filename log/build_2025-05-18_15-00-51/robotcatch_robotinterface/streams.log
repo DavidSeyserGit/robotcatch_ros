@@ -1,0 +1,32 @@
+[0.704s] Invoking command in '/media/david-linux-arm/linux/ros2_ws/src/robotcatch_robotinterface': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robotcatch_robotinterface build --build-base /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/build install --record /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/install.log --single-version-externally-managed install_data
+[0.825s] running egg_info
+[0.825s] creating ../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info
+[0.833s] writing ../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/PKG-INFO
+[0.833s] writing dependency_links to ../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/dependency_links.txt
+[0.833s] writing requirements to ../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/requires.txt
+[0.833s] writing top-level names to ../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/top_level.txt
+[0.834s] writing manifest file '../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/SOURCES.txt'
+[0.850s] reading manifest file '../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/SOURCES.txt'
+[0.850s] writing manifest file '../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info/SOURCES.txt'
+[0.850s] running build
+[0.850s] running build_py
+[0.851s] creating /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/build
+[0.851s] creating /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/build/lib
+[0.851s] creating /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/build/lib/robotcatch_robotinterface
+[0.851s] copying robotcatch_robotinterface/__init__.py -> /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/build/lib/robotcatch_robotinterface
+[0.851s] running install
+[0.854s] running install_lib
+[0.863s] creating /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/lib/python3.12/site-packages/robotcatch_robotinterface
+[0.863s] copying /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/build/lib/robotcatch_robotinterface/__init__.py -> /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/lib/python3.12/site-packages/robotcatch_robotinterface
+[0.863s] byte-compiling /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/lib/python3.12/site-packages/robotcatch_robotinterface/__init__.py to __init__.cpython-312.pyc
+[0.863s] running install_data
+[0.863s] creating /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/share/ament_index
+[0.863s] creating /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/share/ament_index/resource_index
+[0.863s] creating /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/share/ament_index/resource_index/packages
+[0.864s] copying resource/robotcatch_robotinterface -> /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/share/ament_index/resource_index/packages
+[0.864s] copying package.xml -> /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/share/robotcatch_robotinterface
+[0.864s] running install_egg_info
+[0.872s] Copying ../../build/robotcatch_robotinterface/robotcatch_robotinterface.egg-info to /media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/lib/python3.12/site-packages/robotcatch_robotinterface-0.0.0-py3.12.egg-info
+[0.872s] running install_scripts
+[0.933s] writing list of installed files to '/media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/install.log'
+[0.958s] Invoked command in '/media/david-linux-arm/linux/ros2_ws/src/robotcatch_robotinterface' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/media/david-linux-arm/linux/ros2_ws/install/robotcatch_robotinterface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robotcatch_robotinterface build --build-base /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/build install --record /media/david-linux-arm/linux/ros2_ws/build/robotcatch_robotinterface/install.log --single-version-externally-managed install_data

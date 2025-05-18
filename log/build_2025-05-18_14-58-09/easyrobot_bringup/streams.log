@@ -1,0 +1,4 @@
+[0.014s] Invoking command in '/media/david-linux-arm/linux/ros2_ws/build/easyrobot_bringup': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /media/david-linux-arm/linux/ros2_ws/build/easyrobot_bringup -- -j8 -l8
+[0.043s] [0mCMake Error: The source directory "/media/david-linux-arm/linux/ros2_ws/EasyBot/EasyRobot/easyrobot_bringup" does not exist.
+[0.043s] Specify --help for usage, or press the help button on the CMake GUI.[0m
+[0.044s] gmake: *** [Makefile:226: cmake_check_build_system] Error 1

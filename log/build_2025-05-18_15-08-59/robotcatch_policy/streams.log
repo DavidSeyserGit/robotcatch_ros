@@ -1,0 +1,19 @@
+[0.624s] Invoking command in '/media/david-linux-arm/linux/ros2_ws/src/robotcatch_policy': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/media/david-linux-arm/linux/ros2_ws/build/robotcatch_policy/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/media/david-linux-arm/linux/ros2_ws/install/robotcatch_policy/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robotcatch_policy build --build-base /media/david-linux-arm/linux/ros2_ws/build/robotcatch_policy/build install --record /media/david-linux-arm/linux/ros2_ws/build/robotcatch_policy/install.log --single-version-externally-managed install_data
+[0.745s] running egg_info
+[0.754s] writing ../../build/robotcatch_policy/robotcatch_policy.egg-info/PKG-INFO
+[0.755s] writing dependency_links to ../../build/robotcatch_policy/robotcatch_policy.egg-info/dependency_links.txt
+[0.755s] writing requirements to ../../build/robotcatch_policy/robotcatch_policy.egg-info/requires.txt
+[0.755s] writing top-level names to ../../build/robotcatch_policy/robotcatch_policy.egg-info/top_level.txt
+[0.769s] reading manifest file '../../build/robotcatch_policy/robotcatch_policy.egg-info/SOURCES.txt'
+[0.770s] writing manifest file '../../build/robotcatch_policy/robotcatch_policy.egg-info/SOURCES.txt'
+[0.770s] running build
+[0.770s] running build_py
+[0.770s] running install
+[0.773s] running install_lib
+[0.783s] running install_data
+[0.783s] running install_egg_info
+[0.791s] removing '/media/david-linux-arm/linux/ros2_ws/install/robotcatch_policy/lib/python3.12/site-packages/robotcatch_policy-0.0.0-py3.12.egg-info' (and everything under it)
+[0.792s] Copying ../../build/robotcatch_policy/robotcatch_policy.egg-info to /media/david-linux-arm/linux/ros2_ws/install/robotcatch_policy/lib/python3.12/site-packages/robotcatch_policy-0.0.0-py3.12.egg-info
+[0.792s] running install_scripts
+[0.853s] writing list of installed files to '/media/david-linux-arm/linux/ros2_ws/build/robotcatch_policy/install.log'
+[0.895s] Invoked command in '/media/david-linux-arm/linux/ros2_ws/src/robotcatch_policy' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/media/david-linux-arm/linux/ros2_ws/build/robotcatch_policy/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/media/david-linux-arm/linux/ros2_ws/install/robotcatch_policy/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robotcatch_policy build --build-base /media/david-linux-arm/linux/ros2_ws/build/robotcatch_policy/build install --record /media/david-linux-arm/linux/ros2_ws/build/robotcatch_policy/install.log --single-version-externally-managed install_data

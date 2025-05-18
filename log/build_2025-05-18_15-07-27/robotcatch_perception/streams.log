@@ -1,0 +1,21 @@
+[0.601s] Invoking command in '/media/david-linux-arm/linux/ros2_ws/src/robotcatch_perception': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/media/david-linux-arm/linux/ros2_ws/build/robotcatch_perception/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/media/david-linux-arm/linux/ros2_ws/install/robotcatch_perception/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robotcatch_perception build --build-base /media/david-linux-arm/linux/ros2_ws/build/robotcatch_perception/build install --record /media/david-linux-arm/linux/ros2_ws/build/robotcatch_perception/install.log --single-version-externally-managed install_data
+[0.723s] running egg_info
+[0.731s] writing ../../build/robotcatch_perception/robotcatch_perception.egg-info/PKG-INFO
+[0.732s] writing dependency_links to ../../build/robotcatch_perception/robotcatch_perception.egg-info/dependency_links.txt
+[0.732s] writing entry points to ../../build/robotcatch_perception/robotcatch_perception.egg-info/entry_points.txt
+[0.732s] writing requirements to ../../build/robotcatch_perception/robotcatch_perception.egg-info/requires.txt
+[0.732s] writing top-level names to ../../build/robotcatch_perception/robotcatch_perception.egg-info/top_level.txt
+[0.748s] reading manifest file '../../build/robotcatch_perception/robotcatch_perception.egg-info/SOURCES.txt'
+[0.748s] writing manifest file '../../build/robotcatch_perception/robotcatch_perception.egg-info/SOURCES.txt'
+[0.748s] running build
+[0.748s] running build_py
+[0.748s] running install
+[0.752s] running install_lib
+[0.761s] running install_data
+[0.761s] running install_egg_info
+[0.770s] removing '/media/david-linux-arm/linux/ros2_ws/install/robotcatch_perception/lib/python3.12/site-packages/robotcatch_perception-0.0.0-py3.12.egg-info' (and everything under it)
+[0.770s] Copying ../../build/robotcatch_perception/robotcatch_perception.egg-info to /media/david-linux-arm/linux/ros2_ws/install/robotcatch_perception/lib/python3.12/site-packages/robotcatch_perception-0.0.0-py3.12.egg-info
+[0.771s] running install_scripts
+[0.831s] Installing camera_interface script to /media/david-linux-arm/linux/ros2_ws/install/robotcatch_perception/lib/robotcatch_perception
+[0.832s] writing list of installed files to '/media/david-linux-arm/linux/ros2_ws/build/robotcatch_perception/install.log'
+[0.850s] Invoked command in '/media/david-linux-arm/linux/ros2_ws/src/robotcatch_perception' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/media/david-linux-arm/linux/ros2_ws/build/robotcatch_perception/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/media/david-linux-arm/linux/ros2_ws/install/robotcatch_perception/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robotcatch_perception build --build-base /media/david-linux-arm/linux/ros2_ws/build/robotcatch_perception/build install --record /media/david-linux-arm/linux/ros2_ws/build/robotcatch_perception/install.log --single-version-externally-managed install_data

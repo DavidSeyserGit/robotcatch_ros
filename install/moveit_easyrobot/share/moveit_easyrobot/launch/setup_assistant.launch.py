@@ -1,0 +1,1 @@
+/media/david-linux-arm/linux/ros2_ws/EasyBot/EasyRobot/moveit_easyrobot/launch/setup_assistant.launch.py
