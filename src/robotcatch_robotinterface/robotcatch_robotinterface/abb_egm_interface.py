@@ -55,9 +55,6 @@ class ABBRobotEGMNode(Node):
             return
         
         try:
-            # Send command to robot
-            # Note: You may need to adjust this based on your EGM library's API
-            # The exact method will depend on how your ABBRobotEGM library implements sending commands
             success = self.egm.send_to_robot(msg.position)
             
             if not success:
