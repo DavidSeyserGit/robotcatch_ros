@@ -47,7 +47,7 @@ class CameraPublisher(Node):
 
         # Load YOLOv11n model using the ultralytics library
         try:
-            # Get the path to the package's share directory
+                       # Note: results object structure is different in newer ultralytics versions # Get the path to the package's share directory
             package_share_directory = get_package_share_directory('robotcatch_perception')
             # Construct the full path to the model file within the resource directory
             self.model_path = os.path.join(package_share_directory, 'resource', 'best.pt')
@@ -88,21 +88,16 @@ class CameraPublisher(Node):
         ret, frame = self.cap.read()
         if ret:
             # Run inference using the predict method
-            # Note: results object structure is different in newer ultralytics versions
-            # verbose=False suppresses inference output to console
             results = self.model.predict(frame, conf=self.model.conf, verbose=False)
 
             # Draw detection results - ultralytics results object has a plot() method
-            # plot() returns a numpy array (the annotated image)
             annotated_frame = results[0].plot()
 
             # Convert OpenCV image (numpy array) to ROS message
-            # plot() returns BGR format by default, so 'bgr8' is correct
             msg = self.bridge.cv2_to_imgmsg(annotated_frame, encoding="bgr8")
 
             # Publish the image
             self.publisher_.publish(msg)
-            # self.get_logger().info('Publishing detected frame') # This can be noisy
 
         else:
              self.get_logger().warn_once("Failed to read frame from camera.")
