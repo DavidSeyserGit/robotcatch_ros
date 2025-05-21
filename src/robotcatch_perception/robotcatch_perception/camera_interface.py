@@ -81,7 +81,7 @@ class CameraPublisher(Node):
     def timer_callback(self):
         # Only attempt to capture and process if the camera is open
         if not self.is_camera_open:
-             self.get_logger().warn_once("Camera not open. Skipping frame processing.")
+             self.get_logger().warn("Camera not open. Skipping frame processing.")
              return
 
         # Capture frame from camera
@@ -105,7 +105,7 @@ class CameraPublisher(Node):
             # self.get_logger().info('Publishing detected frame') # This can be noisy
 
         else:
-             self.get_logger().warn_once("Failed to read frame from camera.")
+             self.get_logger().warn("Failed to read frame from camera.")
 
 
     def __del__(self):
