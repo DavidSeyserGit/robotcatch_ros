@@ -13,6 +13,7 @@ from ultralytics import YOLO
 
 # Also need ament_index_python to find resource files after installation
 from ament_index_python.packages import get_package_share_directory
+from geometry_msgs.msg import Point
 
 
 class CameraPublisher(Node):
@@ -26,6 +27,8 @@ class CameraPublisher(Node):
     def __init__(self):
         super().__init__('camera_publisher')
         self.publisher_ = self.create_publisher(Image, 'camera/image_raw', 10)
+        
+        self.ball_position_publisher = self.create_publisher(Point, 'ball/position', 10)
         self.bridge = CvBridge()
 
         # Initialize camera
@@ -37,9 +40,6 @@ class CameraPublisher(Node):
         # Check if camera opened successfully
         if not self.cap.isOpened():
             self.get_logger().error(f"Failed to open camera with index {self.CAMERA_INDEX}.")
-            # You might want to handle this more gracefully, e.g., exit the node
-            # rclpy.shutdown() # Not ideal here, maybe raise an exception or set a flag
-            # For now, we'll let it continue, but timer_callback won't do anything if cap is not open
             self.is_camera_open = False
         else:
              self.is_camera_open = True
@@ -47,9 +47,7 @@ class CameraPublisher(Node):
 
         # Load YOLOv11n model using the ultralytics library
         try:
-                       # Note: results object structure is different in newer ultralytics versions # Get the path to the package's share directory
             package_share_directory = get_package_share_directory('robotcatch_perception')
-            # Construct the full path to the model file within the resource directory
             self.model_path = os.path.join(package_share_directory, 'resource', 'best.pt')
             self.get_logger().info(f'Attempting to load model from ROS install share: {self.model_path}')
         except IndexError:
@@ -81,8 +79,8 @@ class CameraPublisher(Node):
     def timer_callback(self):
         # Only attempt to capture and process if the camera is open
         if not self.is_camera_open:
-             self.get_logger().warn("Camera not open. Skipping frame processing.")
-             return
+            self.get_logger().warn("Camera not open. Skipping frame processing.")
+            return
 
         # Capture frame from camera
         ret, frame = self.cap.read()
@@ -96,11 +94,58 @@ class CameraPublisher(Node):
             # Convert OpenCV image (numpy array) to ROS message
             msg = self.bridge.cv2_to_imgmsg(annotated_frame, encoding="bgr8")
 
-            # Publish the image
             self.publisher_.publish(msg)
-
+            
+            self.publish_ball_position(results[0], frame.shape)
         else:
-             self.get_logger().warn("Failed to read frame from camera.")
+            self.get_logger().warn("Failed to read frame from camera.")
+
+    def publish_ball_position(self, result, frame_shape):
+        """Extract ball position from detection results and publish it."""
+        height, width = frame_shape[:2]
+        
+        # Create a Point message with default values
+        point_msg = Point()
+        point_msg.x = -1.0  # Default value indicating no ball detected
+        point_msg.y = -1.0
+        point_msg.z = 0.0   # We're working in 2D, so z is always 0
+        
+        # might need the pinhole model for 3D
+        # for a known ball size, the pinhole model can be used to calculate the distance
+        # from the camera to the ball, but this is not implemented here.
+        
+        # Check if any detections exist
+        if len(result.boxes) > 0:
+            # Get the boxes and confidence scores
+            boxes = result.boxes.xyxy.cpu().numpy()
+            confs = result.boxes.conf.cpu().numpy() 
+            cls = result.boxes.cls.cpu().numpy()
+            
+            ball_indices = np.where(cls == 0)[0]
+            
+            if len(ball_indices) > 0:
+                # If multiple balls detected, take the one with highest confidence
+                if len(ball_indices) > 1:
+                    best_idx = ball_indices[np.argmax(confs[ball_indices])]
+                else:
+                    best_idx = ball_indices[0]
+                
+                # Get the bounding box
+                box = boxes[best_idx]
+                x1, y1, x2, y2 = box
+                
+                center_x = (x1 + x2) / 2
+                center_y = (y1 + y2) / 2
+                
+                norm_x = center_x / width
+                norm_y = center_y / height
+                
+                # Update the Point message
+                point_msg.x = float(norm_x)
+                point_msg.y = float(norm_y)
+        
+        # Publish the ball position
+        self.ball_position_publisher.publish(point_msg)
 
 
     def __del__(self):
