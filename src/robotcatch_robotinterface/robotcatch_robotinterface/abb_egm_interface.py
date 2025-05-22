@@ -15,14 +15,6 @@ class ABBRobotEGMNode(Node):
             10
         )
         
-        # Create a subscription for joint commands
-        self.joint_command_subscription = self.create_subscription(
-            JointState,
-            'abb_robot/joint_commands',
-            self.joint_command_callback,
-            10
-        )
-        
         # Initialize EGM connection
         self.egm = EGM()
         
@@ -34,6 +26,7 @@ class ABBRobotEGMNode(Node):
     def timer_callback(self):
         # Get current joint states
         success, state = self.egm.receive_from_robot()
+
         
         if not success:
             self.get_logger().error('Failed to receive data from robot')
@@ -47,22 +40,6 @@ class ABBRobotEGMNode(Node):
         
         self.joint_state_publisher.publish(joint_state_msg)
 
-    def joint_command_callback(self, msg):
-        """Handle incoming joint commands and send them to the robot."""
-        if len(msg.position) != 6:
-            self.get_logger().error('Expected 6 joint positions, received {}'.format(
-                len(msg.position)))
-            return
-        
-        try:
-            success = self.egm.send_to_robot(msg.position)
-            
-            if not success:
-                self.get_logger().error('Failed to send command to robot')
-            else:
-                self.get_logger().debug('Command sent to robot')
-        except Exception as e:
-            self.get_logger().error(f'Error sending command to robot: {str(e)}')
 
     def destroy_node(self):
         # Clean up EGM connection

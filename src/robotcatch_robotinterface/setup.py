@@ -26,6 +26,7 @@ setup(
     entry_points={
         'console_scripts': [
             'robot_interface = robotcatch_robotinterface.abb_egm_interface:main',
+            'robot_controll = robotcatch_robotinterface.abb_joint_control:main',
         ],
     },
 )
