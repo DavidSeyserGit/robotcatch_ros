@@ -6,7 +6,7 @@ from ABBRobotEGM import EGM
 
 class ABBRobotEGMNode(Node):
     def __init__(self):
-        super().__init__('abb_robot_egm_node')
+        super().__init__('abb_joint_publisher')
         
         # Create a publisher for joint states
         self.joint_state_publisher = self.create_publisher(
