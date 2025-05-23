@@ -3,7 +3,11 @@ from rclpy.node import Node
 from sensor_msgs.msg import JointState
 from ABBRobotEGM import EGM
 
-
+''' 
+core script and egm implementation is from FLo_ABB's git repo
+just modified to be a ROS2 node
+https://github.com/FLo-ABB/ABB-EGM-Python
+'''
 class ABBRobotEGMNode(Node):
     def __init__(self):
         super().__init__('abb_joint_publisher')

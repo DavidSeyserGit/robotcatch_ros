@@ -10,7 +10,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        # 1) your real‐robot joint publisher
+        # 1) real‐robot joint publisher
         Node(
           package='robotcatch_robotinterface',
           executable='robot_stream',
@@ -27,7 +27,7 @@ def generate_launch_description():
           }],
         ),
 
-        # 2) fallback GUI so you at least get zeros when your hardware is offline
+        # 2) fallback GUI so we at least get zeros when no robot is present
         Node(
           package='joint_state_publisher_gui',
           executable='joint_state_publisher_gui',

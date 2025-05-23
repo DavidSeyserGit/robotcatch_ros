@@ -1,6 +1,12 @@
 from ABBRobotEGM import EGM
 import numpy as np
 
+''' 
+core script and egm implementation is from FLo_ABB's git repo
+just modified to be a ROS2 node
+https://github.com/FLo-ABB/ABB-EGM-Python
+'''
+
 def main() -> None:
     """
     Example showing how to make the robot's first joint oscillate between -45 and 45 degrees.
