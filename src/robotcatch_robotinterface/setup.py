@@ -36,6 +36,7 @@ setup(
         ),
         # your package.xml
         (f'share/{package_name}', ['package.xml']),
+        (f'share/{package_name}/config', glob('config/*.rviz')),
         # your launch files
         (f'share/{package_name}/launch', glob('launch/*.py')),
     ] + urdf_data,  # <-- tack on all the URDF+mesh files here

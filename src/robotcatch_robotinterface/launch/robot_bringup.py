@@ -27,14 +27,6 @@ def generate_launch_description():
           }],
         ),
 
-        # 2) fallback GUI so we at least get zeros when no robot is present
-        Node(
-          package='joint_state_publisher_gui',
-          executable='joint_state_publisher_gui',
-          name='joint_state_publisher_gui',
-          output='screen',
-        ),
-
         # 3) drive TFs out of the URDF
         Node(
           package='robot_state_publisher',
@@ -51,6 +43,6 @@ def generate_launch_description():
           name='rviz2',
           output='screen',
           # you can pass in a pre‐made rviz config if you like:
-          # arguments=['-d', os.path.join(pkg_share, 'rviz', 'robot.rviz')]
+          arguments=['-d', os.path.join(pkg_share, 'config', 'digital_twin.rviz')]
         ),
     ])
