@@ -1,11 +1,5 @@
-ament_copyright==0.12.12
-ament_flake8==0.12.12
-ament_pep257==0.12.12
-cv_bridge==3.2.1
-numpy==1.21.5
-opencv_python==4.11.0.86
-pytest==6.2.5
-rclpy==3.3.16
-sensor_msgs==4.8.0
-setuptools==59.6.0
+cv_bridge
+numpy
+opencv_python
+pytest
 torch==2.7.0

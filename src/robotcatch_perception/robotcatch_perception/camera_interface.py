@@ -2,114 +2,215 @@ import rclpy
 from rclpy.node import Node
 import cv2
 import numpy as np
-# import torch # You might not need torch directly anymore, depending on later code
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import os
 from pathlib import Path
-
-# Import the YOLO class from the ultralytics library
 from ultralytics import YOLO
-
-# Also need ament_index_python to find resource files after installation
 from ament_index_python.packages import get_package_share_directory
+from geometry_msgs.msg import Point, Vector3
+from visualization_msgs.msg import Marker
 
 
 class CameraPublisher(Node):
-
-    # Constants for camera configuration
-    CAMERA_INDEX = 0  # Use 0 for default camera
+    CAMERA_INDEX = 1
     FPS = 30
     WIDTH = 640
     HEIGHT = 480
 
     def __init__(self):
         super().__init__('camera_publisher')
-        self.publisher_ = self.create_publisher(Image, 'camera/image_raw', 10)
+        
+        # Publishers
+        self.image_publisher = self.create_publisher(Image, 'camera/image_raw', 10)
+        self.ball_position_publisher = self.create_publisher(Point, 'ball/position', 10)
+        self.ball_velocity_publisher = self.create_publisher(Vector3, 'ball/velocity', 10)
+        self.marker_publisher = self.create_publisher(Marker, 'ball/visualization_marker', 10)
+        
         self.bridge = CvBridge()
+        self.prev_ball_pos = None
+        self.prev_ball_time = None
 
         # Initialize camera
         self.cap = cv2.VideoCapture(self.CAMERA_INDEX)
         self.cap.set(cv2.CAP_PROP_FPS, self.FPS)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.WIDTH)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.HEIGHT)
-
-        # Check if camera opened successfully
-        if not self.cap.isOpened():
+        self.is_camera_open = self.cap.isOpened()
+        
+        if not self.is_camera_open:
             self.get_logger().error(f"Failed to open camera with index {self.CAMERA_INDEX}.")
-            # You might want to handle this more gracefully, e.g., exit the node
-            # rclpy.shutdown() # Not ideal here, maybe raise an exception or set a flag
-            # For now, we'll let it continue, but timer_callback won't do anything if cap is not open
-            self.is_camera_open = False
-        else:
-             self.is_camera_open = True
 
-
-        # Load YOLOv11n model using the ultralytics library
+        # Load YOLO model
         try:
-            # Get the path to the package's share directory
             package_share_directory = get_package_share_directory('robotcatch_perception')
-            # Construct the full path to the model file within the resource directory
             self.model_path = os.path.join(package_share_directory, 'resource', 'best.pt')
-            self.get_logger().info(f'Attempting to load model from ROS install share: {self.model_path}')
         except IndexError:
-             # Fallback if ament_index_python cannot find the package (e.g., running directly from source)
             self.model_path = str(Path(__file__).parent.parent / 'resource' / 'best.pt')
-            self.get_logger().warn(f'Could not find package share directory. Loading model from relative path: {self.model_path}')
+            self.get_logger().warn(f'Using relative model path: {self.model_path}')
 
-
-        # Add a check to ensure the file exists *before* trying to load the model
         if not os.path.exists(self.model_path):
             self.get_logger().error(f"Model file not found at: {self.model_path}")
-             # Consider raising an exception or handling this failure gracefully
             raise FileNotFoundError(f"Model file not found at: {self.model_path}")
 
-        self.get_logger().info(f'Loading model from: {self.model_path}')
-
-        # Use the YOLO class to load the model
         self.model = YOLO(self.model_path)
-        # Set confidence threshold
-        self.model.conf = 0.5 # Note: this might need to be set when running inference depending on the ultralytics version
-
+        self.model.conf = 0.5
         self.get_logger().info("YOLO model loaded successfully.")
 
-
         # Create timer for camera capture
-        timer_period = 1.0 / self.FPS  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.timer = self.create_timer(1.0 / self.FPS, self.timer_callback)
 
     def timer_callback(self):
-        # Only attempt to capture and process if the camera is open
         if not self.is_camera_open:
-             self.get_logger().warn_once("Camera not open. Skipping frame processing.")
-             return
+            return
 
-        # Capture frame from camera
         ret, frame = self.cap.read()
-        if ret:
-            # Run inference using the predict method
-            # Note: results object structure is different in newer ultralytics versions
-            # verbose=False suppresses inference output to console
-            results = self.model.predict(frame, conf=self.model.conf, verbose=False)
+        if not ret:
+            self.get_logger().warn("Failed to read frame from camera.")
+            return
 
-            # Draw detection results - ultralytics results object has a plot() method
-            # plot() returns a numpy array (the annotated image)
-            annotated_frame = results[0].plot()
+        # Run inference
+        results = self.model.predict(frame, conf=self.model.conf, verbose=False)
+        annotated_frame = results[0].plot()
 
-            # Convert OpenCV image (numpy array) to ROS message
-            # plot() returns BGR format by default, so 'bgr8' is correct
-            msg = self.bridge.cv2_to_imgmsg(annotated_frame, encoding="bgr8")
+        # Publish annotated image
+        img_msg = self.bridge.cv2_to_imgmsg(annotated_frame, encoding="bgr8")
+        self.image_publisher.publish(img_msg)
+        
+        # Process ball detection
+        self.process_ball_detection(results[0], frame.shape)
 
-            # Publish the image
-            self.publisher_.publish(msg)
-            # self.get_logger().info('Publishing detected frame') # This can be noisy
-
-        else:
-             self.get_logger().warn_once("Failed to read frame from camera.")
-
+    def process_ball_detection(self, result, frame_shape):
+        height, width = frame_shape[:2]
+        
+        # Default position (no detection)
+        point_msg = Point()
+        point_msg.x = -1.0
+        point_msg.y = -1.0
+        point_msg.z = 0.0
+        
+        # Default velocity
+        vel_msg = Vector3()
+        vel_msg.x = 0.0
+        vel_msg.y = 0.0
+        vel_msg.z = 0.0
+        
+        # Check for ball detections
+        if len(result.boxes) > 0:
+            boxes = result.boxes.xyxy.cpu().numpy()
+            confs = result.boxes.conf.cpu().numpy() 
+            cls = result.boxes.cls.cpu().numpy()
+            
+            ball_indices = np.where(cls == 0)[0]
+            
+            if len(ball_indices) > 0:
+                # Get highest confidence ball detection
+                best_idx = ball_indices[np.argmax(confs[ball_indices])] if len(ball_indices) > 1 else ball_indices[0]
+                
+                # Get bounding box and calculate center
+                x1, y1, x2, y2 = boxes[best_idx]
+                center_x = (x1 + x2) / 2
+                center_y = (y1 + y2) / 2
+                
+                # Normalize coordinates
+                norm_x = center_x / width
+                norm_y = center_y / height
+                
+                # Update position message
+                point_msg.x = float(norm_x)
+                point_msg.y = float(norm_y)
+                
+                # Calculate velocity if we have previous position
+                current_time = self.get_clock().now()
+                if self.prev_ball_pos is not None and self.prev_ball_time is not None:
+                    dt = (current_time - self.prev_ball_time).nanoseconds / 1e9
+                    if dt > 0:
+                        vel_x = (norm_x - self.prev_ball_pos[0]) / dt
+                        vel_y = (norm_y - self.prev_ball_pos[1]) / dt
+                        
+                        # Update velocity message
+                        vel_msg.x = float(vel_x)
+                        vel_msg.y = float(vel_y)
+                        
+                        # Visualize velocity
+                        self.publish_velocity_arrow(norm_x, norm_y, vel_x, vel_y)
+                
+                # Update previous position and time
+                self.prev_ball_pos = (norm_x, norm_y)
+                self.prev_ball_time = current_time
+                
+                # Visualize ball position
+                self.publish_ball_marker(norm_x, norm_y)
+        
+        # Publish position and velocity
+        self.ball_position_publisher.publish(point_msg)
+        self.ball_velocity_publisher.publish(vel_msg)
+        
+    def publish_velocity_arrow(self, x, y, vel_x, vel_y):
+        marker = Marker()
+        marker.header.frame_id = "map"
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "ball_velocity"
+        marker.id = 2
+        marker.type = Marker.ARROW
+        marker.action = Marker.ADD
+        
+        # Arrow start point (ball position)
+        start_point = Point()
+        start_point.x = (x - 0.5) * 2.0
+        start_point.y = (y - 0.5) * -2.0
+        start_point.z = 0.0
+        marker.points.append(start_point)
+        
+        # Arrow end point (based on velocity)
+        end_point = Point()
+        scale_factor = 2
+        end_point.x = start_point.x + vel_x * scale_factor
+        end_point.y = start_point.y - vel_y * scale_factor
+        end_point.z = 0.0
+        marker.points.append(end_point)
+        
+        # Arrow appearance
+        marker.scale.x = 0.05  # Shaft diameter
+        marker.scale.y = 0.1   # Head diameter
+        marker.scale.z = 0.1   # Head length
+        
+        # Green color
+        marker.color.g = 1.0
+        marker.color.a = 1.0
+        
+        marker.lifetime.sec = 1
+        self.marker_publisher.publish(marker)
+        
+    def publish_ball_marker(self, x, y):
+        marker = Marker()
+        marker.header.frame_id = "map"
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "ball"
+        marker.id = 0
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+        
+        # Position (convert normalized coordinates to visualization space)
+        marker.pose.position.x = (x - 0.5) * 2.0
+        marker.pose.position.y = (y - 0.5) * -2.0
+        marker.pose.position.z = 0.0
+        
+        # Orientation (identity quaternion)
+        marker.pose.orientation.w = 1.0
+        
+        # Size
+        marker.scale.x = 0.1
+        marker.scale.y = 0.1
+        marker.scale.z = 0.1
+        
+        # Red color
+        marker.color.r = 1.0
+        marker.color.a = 1.0
+        
+        self.marker_publisher.publish(marker)
 
     def __del__(self):
-        # Release the camera when the node is destroyed
         if hasattr(self, 'cap') and self.cap is not None and self.cap.isOpened():
             self.cap.release()
             self.get_logger().info("Camera released.")
@@ -117,23 +218,24 @@ class CameraPublisher(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    camera_publisher = None # Initialize to None
+    camera_publisher = None
+    
     try:
         camera_publisher = CameraPublisher()
         rclpy.spin(camera_publisher)
     except FileNotFoundError as e:
-        camera_publisher.get_logger().error(f"Node startup failed: {e}")
+        if camera_publisher:
+            camera_publisher.get_logger().error(f"Node startup failed: {e}")
     except Exception as e:
         if camera_publisher:
-             camera_publisher.get_logger().fatal(f"Unhandled exception: {e}", exc_info=True)
+            camera_publisher.get_logger().fatal(f"Unhandled exception: {e}")
         else:
-             # Log error if node creation itself failed
-             rclpy.logging.get_logger("camera_publisher_main").fatal(f"Failed to create CameraPublisher node: {e}", exc_info=True)
+            rclpy.logging.get_logger("camera_publisher_main").fatal(f"Failed to create node: {e}")
     finally:
         if camera_publisher is not None:
             camera_publisher.destroy_node()
         rclpy.shutdown()
 
+
 if __name__ == '__main__':
     main()
-
