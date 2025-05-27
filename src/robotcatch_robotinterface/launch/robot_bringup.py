@@ -6,7 +6,7 @@ import os
 def generate_launch_description():
     pkg_share = get_package_share_directory('robotcatch_robotinterface')
     urdf_file = os.path.join(
-      pkg_share, 'urdf', 'abb_irb120_support', 'urdf', 'abbIrb120.urdf'
+      pkg_share, 'urdf', 'IRB1100_xistera_right', 'urdf', 'IRB1100_xistera_right.urdf'
     )
 
     return LaunchDescription([
@@ -25,6 +25,15 @@ def generate_launch_description():
               'joint_4','joint_5','joint_6'
             ],
           }],
+        ),
+        
+        Node(
+            package='joint_state_publisher_gui',
+            executable='joint_state_publisher_gui',
+            name='joint_state_publisher_gui',
+            output='screen',
+            # It often reads robot_description from the parameter server, which robot_state_publisher sets.
+            parameters=[{'robot_description': open(urdf_file).read()}]
         ),
 
         # 3) drive TFs out of the URDF

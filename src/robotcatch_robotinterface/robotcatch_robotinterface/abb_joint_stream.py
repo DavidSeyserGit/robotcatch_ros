@@ -14,8 +14,8 @@ class ABBRobotEGMNode(Node):
             10
         )
         self.egm = EGM()
-        # 100 Hz timer
-        self.timer = self.create_timer(0.01, self.timer_callback)
+        # 250 Hz timer
+        self.timer = self.create_timer(0.004, self.timer_callback)
         self.get_logger().info('ABB Robot EGM node has been started')
 
     def timer_callback(self):
