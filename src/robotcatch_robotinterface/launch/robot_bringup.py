@@ -19,23 +19,13 @@ def generate_launch_description():
           # if robot_stream publishes on "abb_robot/joint_states", remap it:
           remappings=[('abb_robot/joint_states', 'joint_states')],
           parameters=[{
-            'control_frequency': 1000,
+            'control_frequency': 250,
             'joint_names': [
-              'joint_1','joint_2','joint_3',
-              'joint_4','joint_5','joint_6'
+              'j1','j2','j3',
+              'j4','j5','j6'
             ],
           }],
         ),
-        
-        Node(
-            package='joint_state_publisher_gui',
-            executable='joint_state_publisher_gui',
-            name='joint_state_publisher_gui',
-            output='screen',
-            # It often reads robot_description from the parameter server, which robot_state_publisher sets.
-            parameters=[{'robot_description': open(urdf_file).read()}]
-        ),
-
         # 3) drive TFs out of the URDF
         Node(
           package='robot_state_publisher',

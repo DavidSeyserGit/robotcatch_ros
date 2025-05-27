@@ -15,7 +15,7 @@ class ABBRobotEGMNode(Node):
         )
         self.egm = EGM()
         # 250 Hz timer
-        self.timer = self.create_timer(0.004, self.timer_callback)
+        self.timer = self.create_timer(0.001, self.timer_callback)
         self.get_logger().info('ABB Robot EGM node has been started')
 
     def timer_callback(self):
@@ -29,7 +29,7 @@ class ABBRobotEGMNode(Node):
 
         joint_state_msg = JointState()
         joint_state_msg.header.stamp = self.get_clock().now().to_msg()
-        joint_state_msg.name = [f'joint_{i+1}' for i in range(len(radians))]
+        joint_state_msg.name = [f'j{i+1}' for i in range(len(radians))]
         joint_state_msg.position = radians
 
         self.joint_state_publisher.publish(joint_state_msg)
